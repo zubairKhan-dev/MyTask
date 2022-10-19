@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+/* eslint-disable */
+import React, { Component } from 'react';
+import ImageScreen from "./screens/imageScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "react-native-screens/native-stack";
+import DetailScreen from "./screens/detailScreen";
+import { Provider } from 'react-redux';
+import configureStore from "./store/configureStore";
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+const App =(props)=> {
+  const store = configureStore()
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="ImageScreen" component={ImageScreen} options={{ title: 'My Images' }}/>
+          <Stack.Screen name="DetailScreen" component={DetailScreen} options={{ title: 'Detail Screen' }}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+      </Provider>
+      // <ImageScreen />
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
+
+
+
+
